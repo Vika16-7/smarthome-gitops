@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: telemetry
-          image: ghcr.io/vika16-7/telemetry:latest
+          image: ghcr.io/vika16-7/telemetry:ed9441491c2fd39db4f8a6c7948c93b9d84d6d88
           ports:
             - containerPort: 8116
           readinessProbe:

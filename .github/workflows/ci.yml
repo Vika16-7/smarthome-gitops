@@ -23,12 +23,14 @@ jobs:
 
       - name: Build and push
         run: |
-          docker build -t ghcr.io/${{ github.repository_owner }}/telemetry:${{ github.sha }} ./app
-          docker push ghcr.io/${{ github.repository_owner }}/telemetry:${{ github.sha }}
+          OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+          docker build -t ghcr.io/$OWNER/telemetry:${{ github.sha }} ./app
+          docker push ghcr.io/$OWNER/telemetry:${{ github.sha }}
 
       - name: Update image tag
         run: |
-          sed -i "s|image: ghcr.io/.*/telemetry:.*|image: ghcr.io/${{ github.repository_owner }}/telemetry:${{ github.sha }}|" infra/deployment.yaml
+          OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+          sed -i "s|image: ghcr.io/.*/telemetry:.*|image: ghcr.io/$OWNER/telemetry:${{ github.sha }}|" infra/deployment.yaml
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
           git add infra/deployment.yaml
